@@ -1,52 +1,57 @@
 import React from "react";
 
-
-function createState() {
-    let state = [];
-    state["mozzarella"] = { checked: false, price: 29 };
-    state["cheddar"] = { checked: false, price: 29 };
-    state["dorblu"] = { checked: false, price: 29 };
-    state["tomato"] = { checked: false, price: 29 };
-    state["mushrooms"] = { checked: false, price: 29 };
-    state["paprika"] = { checked: false, price: 29 };
-    state["bacon"] = { checked: false, price: 29 };
-    state["pepperoni"] = { checked: false, price: 29 };
-    state["ham"] = { checked: false, price: 29 };
-    return state;
+const reducer = (state, action) => {
+    switch (action.type) {
+        case 'ING_SELECTED':
+            state.ingredients[action.name].checked = action.checked;
+            return Object.create(state);
+        case 'SIZE_CHANGED':
+            state.size.isLarge = action.isLarge;
+            return Object.create(state);
+        default:
+            return state
+    }
 }
 
 function Сonfigurator() {
-    const [checkboxs, setCheckboxs] = React.useState(createState());
-    //state for input "pizza size"
-    const [largeSizeSelected, setLargeSizeSelected] = React.useState(false);
+    const [state, dispatch] = React.useReducer(reducer, {
+        ingredients: {
+            "mozzarella": { checked: false, price: 29 },
+            "cheddar": { checked: false, price: 29 },
+            "dorblu": { checked: false, price: 29 },
+            "tomato": { checked: false, price: 29 },
+            "mushrooms": { checked: false, price: 29 },
+            "paprika": { checked: false, price: 29 },
+            "bacon": { checked: false, price: 29 },
+            "pepperoni": { checked: false, price: 29 },
+            "ham": { checked: false, price: 29 }
+        },
+        size: { isLarge: false, price: 50 }
+    });
 
     //function for changing the "pizza size" state
     const changing = (event) => {
-        setLargeSizeSelected(event.target.value === "largeSize");
+        dispatch({ type: 'SIZE_CHANGED', isLarge: event.target.value === "largeSize" });
     }
 
     //function for changing states of checkboxs
     const changingCheckbox = (name) => {
         return (event) => {
-            let current = checkboxs;
-            current[name].checked = event.target.checked;
-            console.log("Change state");
-            //Doesn't call render after state update
-            setCheckboxs(current);
+            dispatch({ type: 'ING_SELECTED', name: name, checked: event.target.checked });
         };
     };
 
     const calculateSum = () => {
-        console.log("Called");
+        console.log(state);
         let totalSum = 200;
-        if (largeSizeSelected) {
-            totalSum += 50;
+        if (state.size.isLarge) {
+            totalSum += state.size.price;
         }
-        checkboxs.forEach(element => {
-            if (element.checked) {
-                totalSum += element.price;
+        Object.values(state.ingredients).forEach(e => {
+            if (e.checked) {
+                totalSum += e.price;
             }
-        });
+        })
         return totalSum;
     };
 

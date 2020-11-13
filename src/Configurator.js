@@ -4,7 +4,7 @@ import Order from './Order';
 const reducer = (state, action) => {
     switch (action.type) {
         case 'SIZE_CHANGED':
-            state.size.isLarge = action.isLarge;
+            state.size.size = action.size;
             return Object.create(state);
         case 'DOUGH_SELECTED':
             state.dough = action.dough;
@@ -15,9 +15,6 @@ const reducer = (state, action) => {
 
         case 'ING_SELECTED':
             state.ingredients[action.name].checked = action.checked;
-            return Object.create(state);
-        case 'DOUGH_SELECTED':
-            state.dough = action.dough;
             return Object.create(state);
 
         case 'SHOW_ORDER':
@@ -41,27 +38,19 @@ function Сonfigurator() {
             "pepperoni": { checked: false, price: 29 },
             "ham": { checked: false, price: 29 }
         },
-        size: { isLarge: false, price: 50 },
+        size: { size: "30 sm", price: 50 },
         dough: "thin",
         sauce: "tomato sauce",
         showOrder: false
     });
 
     //function for changing the "pizza size" state
-    const changing = (event) => {
-        dispatch({ type: 'SIZE_CHANGED', isLarge: event.target.value === "largeSize" });
+    const changingSize = (event) => {
+        dispatch({ type: 'SIZE_CHANGED', size: event.target.value });
     }
-
-    //function for changing states of checkboxs
-    const changingCheckbox = (name) => {
-        return (event) => {
-            dispatch({ type: 'ING_SELECTED', name: name, checked: event.target.checked });
-        };
-    };
 
     //function for changing the dough states     
     const changingDough = (event) => {
-        console.log(event.target.value);
         dispatch({ type: 'DOUGH_SELECTED', dough: event.target.value });
     }
 
@@ -71,13 +60,20 @@ function Сonfigurator() {
         dispatch({ type: 'SAUCE_SELECTED', sauce: event.target.value });
     }
 
+    //function for changing states of checkboxs
+    const changingCheckbox = (name) => {
+        return (event) => {
+            dispatch({ type: 'ING_SELECTED', name: name, checked: event.target.checked });
+        };
+    };
+
     const showOrder = () => {
         dispatch({ type: 'SHOW_ORDER' })
     };
 
     const calculateSum = () => {
         let totalSum = 200;
-        if (state.size.isLarge) {
+        if (state.size.size === "35 sm") {
             totalSum += state.size.price;
         }
         Object.values(state.ingredients).forEach(e => {
@@ -96,11 +92,11 @@ function Сonfigurator() {
                     <h2>Choose your pizza:</h2>
 
                     <form >
-                        <div onChange={changing} >
+                        <div onChange={changingSize} >
                             <p>Choose pizza size:</p>
-                            <input type="radio" id="baseSize" defaultChecked name="size" />
+                            <input type="radio" id="baseSize" defaultChecked name="size" value="30 sm" />
                             <label htmlFor="baseSize">30 sm</label><br />
-                            <input type="radio" id="largeSize" name="size" value="largeSize" />
+                            <input type="radio" id="largeSize" name="size" value="35 sm" />
                             <label htmlFor="largeSize">35 sm</label><br />
                         </div>
 

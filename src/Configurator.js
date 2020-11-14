@@ -1,173 +1,118 @@
-import React from "react";
-import Order from './Order';
+import React, { useState } from "react";
+import { useArray } from "./useArray";
+import { calculateSum } from "./calculateSum";
+import * as DATA from "./pizzaData";
 
-const reducer = (state, action) => {
-    switch (action.type) {
-        case 'SIZE_CHANGED':
-            state.size.size = action.size;
-            return Object.create(state);
-        case 'DOUGH_SELECTED':
-            state.dough = action.dough;
-            return Object.create(state);
-        case 'SAUCE_SELECTED':
-            state.sauce = action.sauce;
-            return Object.create(state);
+export const Сonfigurator = ({ onPizzaSubmit }) => {
+    const [size, setSize] = useState("small");
+    const [dough, setDough] = useState("thin");
+    const [sauce, setSauce] = useState("tomato");
+    const [ingredients, addIngredient, removeIngredient] = useArray([]);
 
-        case 'ING_SELECTED':
-            state.ingredients[action.name].checked = action.checked;
-            return Object.create(state);
 
-        case 'SHOW_ORDER':
-            state.showOrder = true;
-            return Object.create(state);
-        default:
-            return state
-    }
-}
-
-function Сonfigurator() {
-    const [state, dispatch] = React.useReducer(reducer, {
-        ingredients: {
-            "mozzarella": { checked: false, price: 29 },
-            "cheddar": { checked: false, price: 29 },
-            "dorblu": { checked: false, price: 29 },
-            "tomato": { checked: false, price: 29 },
-            "mushrooms": { checked: false, price: 29 },
-            "paprika": { checked: false, price: 29 },
-            "bacon": { checked: false, price: 29 },
-            "pepperoni": { checked: false, price: 29 },
-            "ham": { checked: false, price: 29 }
-        },
-        size: { size: "30 sm", price: 50 },
-        dough: "thin",
-        sauce: "tomato sauce",
-        showOrder: false
-    });
-
-    //function for changing the "pizza size" state
     const changingSize = (event) => {
-        dispatch({ type: 'SIZE_CHANGED', size: event.target.value });
+        setSize(event.target.value);
     }
 
-    //function for changing the dough states     
     const changingDough = (event) => {
-        dispatch({ type: 'DOUGH_SELECTED', dough: event.target.value });
+        setDough(event.target.value);
     }
 
-    //function for changing the Sauce states  
     const changingSauce = (event) => {
-        console.log(event.target.value);
-        dispatch({ type: 'SAUCE_SELECTED', sauce: event.target.value });
+        setSauce(event.target.value);
     }
 
-    //function for changing states of checkboxs
-    const changingCheckbox = (name) => {
-        return (event) => {
-            dispatch({ type: 'ING_SELECTED', name: name, checked: event.target.checked });
-        };
-    };
-
-    const showOrder = () => {
-        dispatch({ type: 'SHOW_ORDER' })
-    };
-
-    const calculateSum = () => {
-        let totalSum = 200;
-        if (state.size.size === "35 sm") {
-            totalSum += state.size.price;
+    const changingIngredients = (event) => {
+        if (event.target.checked) {
+            addIngredient(event.target.value);
+        } else {
+            removeIngredient(event.target.value);
         }
-        Object.values(state.ingredients).forEach(e => {
-            if (e.checked) {
-                totalSum += e.price;
-            }
-        })
-        return totalSum;
-    };
+    }
+
+    const sum = calculateSum({ size, dough, sauce, ingredients });
+
+    const onSubmit = (event) => {
+        event.preventDefault();
+        onPizzaSubmit({ size, dough, sauce, ingredients })
+    }
 
     return (
         <>
-            {
-                state.showOrder ? <Order data={state} /> : < div >
-                    <h1>Artem pizza</h1>
-                    <h2>Choose your pizza:</h2>
+            <h1>Artem pizza</h1>
+            <h2>Choose your pizza:</h2>
 
-                    <form >
-                        <div onChange={changingSize} >
-                            <p>Choose pizza size:</p>
-                            <input type="radio" id="baseSize" defaultChecked name="size" value="30 sm" />
-                            <label htmlFor="baseSize">30 sm</label><br />
-                            <input type="radio" id="largeSize" name="size" value="35 sm" />
-                            <label htmlFor="largeSize">35 sm</label><br />
-                        </div>
+            <form onSubmit={onSubmit}>
+                <fieldset>
+                    <legend>Choose pizza size:</legend>
+                    <input type="radio" id="baseSize" checked={size === "small"} onChange={changingSize} value="small" />
+                    <label htmlFor="baseSize">{DATA.SIZE.small.name}</label><br />
+                    <input type="radio" id="largeSize" checked={size === "large"} onChange={changingSize} value="large" />
+                    <label htmlFor="largeSize">{DATA.SIZE.large.name}</label><br />
+                </fieldset>
 
-                        <br />
+                <br />
 
-                        <div onChange={changingDough} >
-                            <p>Choose pizza dough:</p>
-                            <input type="radio" id="thin" defaultChecked name="dough" value="thin" />
-                            <label htmlFor="thin">thin</label><br />
-                            <input type="radio" id="thick " name="dough" value="thick " />
-                            <label htmlFor="thick ">thick </label><br />
-                        </div>
+                <fieldset>
+                    <legend>Choose pizza dough:</legend>
+                    <input type="radio" id="thin" onChange={changingDough} checked={dough === "thin"} value="thin" />
+                    <label htmlFor="thin">{DATA.DOUGH.thin.name}</label><br />
+                    <input type="radio" id="thick" onChange={changingDough} checked={dough === "thick"} value="thick" />
+                    <label htmlFor="thick ">{DATA.DOUGH.thin.name}</label><br />
+                </fieldset>
 
-                        <br />
+                <br />
 
-                        <div onChange={changingSauce} >
-                            <p>Choose pizza sauce:</p>
-                            <input type="radio" id="tomatoSauce" defaultChecked name="sauce" value="tomato sauce" />
-                            <label htmlFor="tomatoSauce">tomato sauce</label><br />
-                            <input type="radio" id="whiteSauce" name="sauce" value="white sauce" />
-                            <label htmlFor="whiteSauce">white sauce</label><br />
-                            <input type="radio" id="hotSauce" name="sauce" value="hot sauce" />
-                            <label htmlFor="hotSauce">hot sauce</label><br />
-                        </div>
+                <fieldset>
+                    <legend>Choose pizza sauce:</legend>
+                    <input type="radio" id="tomatoSauce" onChange={changingSauce} checked={sauce === "tomato"} value="tomato" />
+                    <label htmlFor="tomatoSauce">{DATA.SAUCE.tomato.name}</label><br />
+                    <input type="radio" id="whiteSauce" onChange={changingSauce} checked={sauce === "white"} value="white" />
+                    <label htmlFor="whiteSauce">{DATA.SAUCE.white.name}</label><br />
+                    <input type="radio" id="hotSauce" onChange={changingSauce} checked={sauce === "hot"} value="hot" />
+                    <label htmlFor="hotSauce">{DATA.SAUCE.hot.name}</label><br />
+                </fieldset>
 
-                        <br />
+                <br />
 
-                        <div>
-                            <p>Choose cheese:</p>
-                            <input type="checkbox" id="mozzarella" onChange={changingCheckbox("mozzarella")} name="mozzarellaCheese" />
-                            <label htmlFor="mozzarella"> mozzarella cheese</label><br />
-                            <input type="checkbox" id="cheddar" onChange={changingCheckbox("cheddar")} name="cheddarCheese" />
-                            <label htmlFor="cheddar"> cheddar cheese</label><br />
-                            <input type="checkbox" id="dorblu" onChange={changingCheckbox("dorblu")} name="dorbluCheese" />
-                            <label htmlFor="dorblu"> dorblu cheese</label><br />
-                        </div>
+                <fieldset>
+                    <legend>Choose cheese:</legend>
+                    <input type="checkbox" id="mozzarella" value="mozzarella" onChange={changingIngredients} checked={ingredients.includes("mozzarella")} />
+                    <label htmlFor="mozzarella">{DATA.INGREDIENTS.mozzarella.name}</label><br />
+                    <input type="checkbox" id="cheddar" value="cheddar" onChange={changingIngredients} checked={ingredients.includes("cheddar")} />
+                    <label htmlFor="cheddar">{DATA.INGREDIENTS.cheddar.name}</label><br />
+                    <input type="checkbox" id="dorblu" value="dorblu" onChange={changingIngredients} checked={ingredients.includes("dorblu")} />
+                    <label htmlFor="dorblu">{DATA.INGREDIENTS.dorblu.name}</label><br />
+                </fieldset>
 
-                        <br />
+                <br />
 
-                        <div>
-                            <p>Choose vegetables:</p>
-                            <input type="checkbox" id="tomato" onChange={changingCheckbox("tomato")} name="tomato" />
-                            <label htmlFor="tomato"> tomato</label><br />
-                            <input type="checkbox" id="mushrooms" onChange={changingCheckbox("mushrooms")} name="mushrooms" />
-                            <label htmlFor="mushrooms"> mushrooms</label><br />
-                            <input type="checkbox" id="paprika" onChange={changingCheckbox("paprika")} name="paprika" />
-                            <label htmlFor="paprika"> paprika</label><br />
-                        </div>
+                <fieldset>
+                    <legend>Choose vegetables:</legend>
+                    <input type="checkbox" id="tomato" value="tomato" onChange={changingIngredients} checked={ingredients.includes("tomato")} />
+                    <label htmlFor="tomato">{DATA.INGREDIENTS.tomato.name}</label><br />
+                    <input type="checkbox" id="mushrooms" value="mushrooms" onChange={changingIngredients} checked={ingredients.includes("mushrooms")} />
+                    <label htmlFor="mushrooms">{DATA.INGREDIENTS.mushrooms.name}</label><br />
+                    <input type="checkbox" id="paprika" value="paprika" onChange={changingIngredients} checked={ingredients.includes("paprika")} />
+                    <label htmlFor="paprika">{DATA.INGREDIENTS.paprika.name}</label><br />
+                </fieldset>
 
-                        <br />
+                <br />
 
-                        <div>
-                            <p>Choose meat:</p>
-                            <input type="checkbox" id="bacon" onChange={changingCheckbox("bacon")} name="bacon" />
-                            <label htmlFor="bacon"> bacon</label><br />
-                            <input type="checkbox" id="pepperoni" onChange={changingCheckbox("pepperoni")} name="pepperoni" />
-                            <label htmlFor="pepperoni"> pepperoni</label><br />
-                            <input type="checkbox" id="ham" onChange={changingCheckbox("ham")} name="ham" />
-                            <label htmlFor="ham"> ham</label><br />
-                        </div>
+                <fieldset>
+                    <legend>Choose meat:</legend>
+                    <input type="checkbox" id="bacon" value="bacon" onChange={changingIngredients} checked={ingredients.includes("bacon")} />
+                    <label htmlFor="bacon">{DATA.INGREDIENTS.bacon.name}</label><br />
+                    <input type="checkbox" id="pepperoni" value="pepperoni" onChange={changingIngredients} checked={ingredients.includes("pepperoni")} />
+                    <label htmlFor="pepperoni">{DATA.INGREDIENTS.pepperoni.name}</label><br />
+                    <input type="checkbox" id="ham" value="ham" onChange={changingIngredients} checked={ingredients.includes("ham")} />
+                    <label htmlFor="ham">{DATA.INGREDIENTS.ham.name}</label><br />
+                </fieldset>
 
-                        <br />
+                <br />
 
-                        <button type="button" onClick={showOrder}>Your order: {calculateSum()} RUB</button>
-                    </form>
-
-                </div >
-            }
+                <button>Your order: {sum} RUB</button>
+            </form>
         </>
-
     );
 }
-
-export default Сonfigurator;

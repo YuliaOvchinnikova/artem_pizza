@@ -1,16 +1,20 @@
-function Order({ data }) {
-    console.log(data);
+import * as DATA from './pizzaData';
+import { calculateSum } from './calculateSum';
+
+function Order({ pizza }) {
+    const { size, dough, sauce, ingredients } = pizza;
+    const sum = calculateSum(pizza);
     return (
         <div>
             <h2>Your order </h2> <br />
             <p>Pizza with: </p> <br />
             <ul>
-                <li>{data.size.size}</li>
-                <li>{data.dough}</li>
-                <li>{data.sauce}</li>
-                {Object.entries(data.ingredients).filter(el => el[1].checked).map(el => <li key={el[0]}>{el[0]}</li>)}
-
+                <li>{DATA.SIZE[size].name}</li>
+                <li>{DATA.DOUGH[dough].name}</li>
+                <li>{DATA.SAUCE[sauce].name}</li>
+                {ingredients.map(i => <li key={i}>{DATA.INGREDIENTS[i].name}</li>)}
             </ul>
+            <h3>Order sum: {sum}</h3>
         </div>
     );
 };

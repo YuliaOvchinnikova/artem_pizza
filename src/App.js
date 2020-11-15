@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Сonfigurator } from "./Configurator";
-import Order from "./Order";
+import { Order } from "./Order";
 
 function App() {
     const [pizza, setPizza] = useState();

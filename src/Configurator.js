@@ -58,7 +58,7 @@ export const Сonfigurator = ({ onPizzaSubmit }) => {
                     <input type="radio" id="thin" onChange={changingDough} checked={dough === "thin"} value="thin" />
                     <label htmlFor="thin">{DATA.DOUGH.thin.name}</label><br />
                     <input type="radio" id="thick" onChange={changingDough} checked={dough === "thick"} value="thick" />
-                    <label htmlFor="thick ">{DATA.DOUGH.thin.name}</label><br />
+                    <label htmlFor="thick ">{DATA.DOUGH.thick.name}</label><br />
                 </fieldset>
 
                 <br />

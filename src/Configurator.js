@@ -3,7 +3,7 @@ import { useArray } from "./useArray";
 import { calculateSum } from "./calculateSum";
 import * as DATA from "./pizzaData";
 
-export const Сonfigurator = ({ onPizzaSubmit }) => {
+export const Configurator = ({ onPizzaSubmit }) => {
     const [size, setSize] = useState("small");
     const [dough, setDough] = useState("thin");
     const [sauce, setSauce] = useState("tomato");

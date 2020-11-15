@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Сonfigurator } from "./Configurator";
+import { Configurator } from "./Configurator";
 import { Order } from "./Order";
 
 function App() {
@@ -15,7 +15,7 @@ function App() {
 
     return (
         <>
-            <Сonfigurator onPizzaSubmit={setPizza} />
+            <Configurator onPizzaSubmit={setPizza} />
         </>
     );
 }

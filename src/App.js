@@ -1,23 +1,47 @@
 import { useState } from "react";
-import { Configurator } from "./Configurator";
-import { Order } from "./Order";
+import { Route, Link, Switch } from "react-router-dom";
+import { BillPage } from "./BillPage";
+import { ConfiguratorPage } from "./ConfiguratorPage";
+import { LoginPage } from "./LoginPage";
+import { OrderHistoryPage } from "./OrderHistoryPage";
+import { OrderPage } from "./OrderPage";
+import { PageNotFoundPage } from "./PageNotFoundPage";
+import { PaymentPage } from "./PaymentPage";
+import { RegistrationPage } from "./RegistrationPage";
+import { Navigation } from "./Navigation";
 
 function App() {
-    const [pizza, setPizza] = useState();
-
-    if (pizza) {
-        return (
-            <>
-                <Order pizza={pizza} />
-            </>
-        );
-    }
-
-    return (
-        <>
-            <Configurator onPizzaSubmit={setPizza} />
-        </>
-    );
+  return (
+    <>
+      <Navigation />
+      <Switch>
+        <Route path="/bill">
+          <BillPage />
+        </Route>
+        <Route exact path="/">
+          <ConfiguratorPage />
+        </Route>
+        <Route path="/login">
+          <LoginPage />
+        </Route>
+        <Route path="/orderHistory">
+          <OrderHistoryPage />
+        </Route>
+        <Route path="/order">
+          <OrderPage />
+        </Route>
+        <Route path="/payment">
+          <PaymentPage />
+        </Route>
+        <Route path="/registration">
+          <RegistrationPage />
+        </Route>
+        <Route>
+          <PageNotFoundPage />
+        </Route>
+      </Switch>
+    </>
+  );
 }
 
 export default App;

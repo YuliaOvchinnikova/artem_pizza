@@ -1,5 +1,5 @@
 import { useState, createContext, useContext } from "react";
-const PizzaContext = createContext();
+export const PizzaContext = createContext();
 
 export const PizzaProvider = ({ children }) => {
   const [pizza, setPizza] = useState();

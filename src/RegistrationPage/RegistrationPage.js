@@ -1,46 +1,54 @@
 import React, { useState } from "react";
+import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 
 export const RegistrationPage = () => {
-  const [loginName, setLoginName] = React.useState("");
-  const [password, setPassword] = React.useState("");
+  const [loginName, setLoginName] = useState("");
+  const [password, setPassword] = useState("");
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    alert(loginName + " " + password);
+  const { register, handleSubmit, errors } = useForm();
+
+  const onSubmit = (data) => {
+    console.log(data);
+    setLoginName(data.loginName);
+    setPassword(data.password);
   };
 
-  const handleLoginNameInputChange = (event) => {
-    setLoginName(event.target.value);
-  };
-
-  const handlePasswordInputChange = (event) => {
-    setPassword(event.target.value);
-  };
   return (
     <div>
       <h1>Registration</h1> <br />
-      <form onSubmit={handleSubmit}>
-        <label>
-          Login name:
-          <input
-            name="loginName"
-            type="text"
-            value={loginName}
-            onChange={handleLoginNameInputChange}
-          />
-        </label>
-        <br />
-        <label>
-          Password:
-          <input
-            name="password"
-            type="text"
-            value={password}
-            onChange={handlePasswordInputChange}
-          />
-        </label>
-        <br />
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div>
+          <label>
+            Login name:
+            <input
+              name="loginName"
+              placeholder="Login"
+              ref={register({
+                required: { value: true, message: "Required field" },
+                pattern: {
+                  value: /[A-Za-z]/,
+                  message: "Just latin letters",
+                },
+              })}
+            />
+          </label>
+          {errors.loginName && <p>{errors.loginName.message}</p>}
+        </div>
+
+        <div>
+          <label>
+            Password:
+            <input
+              name="password"
+              placeholder="Password"
+              ref={register({
+                required: { value: true, message: "Required field" },
+              })}
+            />
+          </label>
+          {errors.password && <p>{errors.password.message}</p>}
+        </div>
         <button>Submit</button>
       </form>
       <Link to="/login">Login</Link>

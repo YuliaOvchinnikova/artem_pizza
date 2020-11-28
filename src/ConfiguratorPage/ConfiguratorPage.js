@@ -22,7 +22,6 @@ export const ConfiguratorPage = () => {
   const sum = calculateSum(values);
 
   const onSubmit = (data) => {
-    console.log(data);
     setPizza(data);
     history.push("/order");
   };

@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
 const normalizeCardNumber = (value) => {
@@ -49,7 +48,6 @@ export const PaymentPage = () => {
         </div>
         <button>Submit</button>
       </form>
-      <Link to="/bill">Bill</Link>
     </>
   );
 };

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
 
 export const RegistrationPage = () => {
   const [loginName, setLoginName] = useState("");
@@ -25,9 +24,9 @@ export const RegistrationPage = () => {
               name="loginName"
               placeholder="Login"
               ref={register({
-                required: { value: true, message: "Required field" },
+                required: { value: true, message: "Login is required field" },
                 pattern: {
-                  value: /[A-Za-z]/,
+                  value: /[A-Za-z]+$/i,
                   message: "Just latin letters",
                 },
               })}
@@ -43,7 +42,10 @@ export const RegistrationPage = () => {
               name="password"
               placeholder="Password"
               ref={register({
-                required: { value: true, message: "Required field" },
+                required: {
+                  value: true,
+                  message: "Password is required field",
+                },
               })}
             />
           </label>
@@ -51,7 +53,6 @@ export const RegistrationPage = () => {
         </div>
         <button>Submit</button>
       </form>
-      <Link to="/login">Login</Link>
     </div>
   );
 };

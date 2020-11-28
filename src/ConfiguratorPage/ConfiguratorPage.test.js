@@ -3,6 +3,7 @@ const { ConfiguratorPage } = require("./ConfiguratorPage");
 import { PizzaProvider, PizzaContext } from "./../PizzaContext";
 import { createMemoryHistory } from "history";
 import { Router } from "react-router-dom";
+import { act } from "react-dom/test-utils";
 
 describe("ConfiguratorPage", () => {
   it("renders correctly", () => {
@@ -81,7 +82,7 @@ describe("ConfiguratorPage", () => {
   });
 
   describe("on pizza submit", () => {
-    it("passes constructed pizza", () => {
+    it("passes constructed pizza", async () => {
       const history = createMemoryHistory();
       const setPizza = jest.fn();
       const { getByText } = render(
@@ -105,7 +106,9 @@ describe("ConfiguratorPage", () => {
 
       fireEvent.click(getByText("bacon"));
 
-      fireEvent.click(getByText("Your order: 424 RUB"));
+      await act(async () => {
+        fireEvent.click(getByText("Your order: 424 RUB"));
+      });
 
       expect(setPizza).toBeCalledWith({
         dough: "thin",

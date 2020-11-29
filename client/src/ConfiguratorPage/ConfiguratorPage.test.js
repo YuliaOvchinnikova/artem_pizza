@@ -12,7 +12,7 @@ describe("ConfiguratorPage", () => {
         <ConfiguratorPage />
       </PizzaProvider>
     );
-    expect(getByText("Choose pizza size:")).toBeInTheDocument();
+    expect(getByText("Choose size:")).toBeInTheDocument();
   });
 
   describe("with large size selected", () => {

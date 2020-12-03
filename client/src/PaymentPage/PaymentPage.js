@@ -1,7 +1,14 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 
-const normalizeCardNumber = (value) => {
+export const normalizeCardNumber = (value) => {
+  if (
+    value === undefined ||
+    typeof value !== "string" ||
+    !/^(\d+\s*)+$/.test(value)
+  ) {
+    return "";
+  }
   return (
     value
       .replace(/\s/g, "")
@@ -11,18 +18,27 @@ const normalizeCardNumber = (value) => {
   );
 };
 
+export const getCardType = (firstCharacter) => {
+  if (firstCharacter === "4") {
+    return "Visa";
+  } else if (firstCharacter === "5") {
+    return "MasterCard";
+  }
+  return "";
+};
+
 export const PaymentPage = () => {
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, setValue } = useForm();
   const [cardType, setCardType] = useState("");
 
   const onSubmit = (data) => {
-    if (data.cardNumber[0] === "4") {
-      setCardType("Visa");
-    } else if (data.cardNumber[0] === "5") {
-      setCardType("MasterCard");
-    } else {
-      setCardType("");
-    }
+    let cardType = getCardType(data.cardNumber[0]);
+    setCardType(cardType);
+  };
+
+  const onChange = (event) => {
+    const { value } = event.target;
+    setValue("cardNumber", normalizeCardNumber(value));
   };
 
   return (
@@ -38,10 +54,7 @@ export const PaymentPage = () => {
             autoComplete="cc-number"
             name="cardNumber"
             id="cardNumber"
-            onChange={(event) => {
-              const { value } = event.target;
-              event.target.value = normalizeCardNumber(value);
-            }}
+            onChange={onChange}
             ref={register}
           />
           <p>{cardType}</p>

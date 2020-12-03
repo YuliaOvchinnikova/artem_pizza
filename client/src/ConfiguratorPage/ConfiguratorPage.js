@@ -4,7 +4,8 @@ import { calculateSum } from "./../calculateSum";
 import * as DATA from "./../pizzaData";
 import { usePizza } from "./../PizzaContext";
 import { useForm } from "react-hook-form";
-import { FieldSet } from "./FieldSet";
+import { RadioSet } from "./RadioSet";
+import { CheckboxSet } from "./CheckboxSet";
 
 export const ConfiguratorPage = () => {
   const history = useHistory();
@@ -33,55 +34,49 @@ export const ConfiguratorPage = () => {
       <h2>Choose your pizza:</h2>
 
       <form onSubmit={handleSubmit(onSubmit)}>
-        <FieldSet
+        <RadioSet
           text="size"
           name="size"
-          type="radio"
           values={["small", "large"]}
           register={register}
           data={DATA.SIZE}
         />
 
-        <FieldSet
+        <RadioSet
           text="dough"
           name="dough"
-          type="radio"
           values={["thin", "thick"]}
           register={register}
           data={DATA.DOUGH}
         />
 
-        <FieldSet
+        <RadioSet
           text="sauce"
           name="sauce"
-          type="radio"
           values={["tomato", "white", "hot"]}
           register={register}
           data={DATA.SAUCE}
         />
 
-        <FieldSet
+        <CheckboxSet
           text="cheese"
           name="ingredients"
-          type="checkbox"
           values={["mozzarella", "cheddar", "dorblu"]}
           register={register}
           data={DATA.INGREDIENTS}
         />
 
-        <FieldSet
+        <CheckboxSet
           text="vegetables"
           name="ingredients"
-          type="checkbox"
           values={["tomato", "mushrooms", "paprika"]}
           register={register}
           data={DATA.INGREDIENTS}
         />
 
-        <FieldSet
+        <CheckboxSet
           text="meat"
           name="ingredients"
-          type="checkbox"
           values={["bacon", "pepperoni", "ham"]}
           register={register}
           data={DATA.INGREDIENTS}

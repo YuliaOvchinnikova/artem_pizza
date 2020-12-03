@@ -1,6 +1,6 @@
 import React from "react";
 
-export const FieldSet = ({ text, name, type, values, register, data }) => {
+export const RadioSet = ({ text, name, values, register, data }) => {
   return (
     <>
       <fieldset>
@@ -8,14 +8,12 @@ export const FieldSet = ({ text, name, type, values, register, data }) => {
         {values.map((value) => (
           <div key={value}>
             <label>
-              <input name={name} type={type} value={value} ref={register} />
+              <input name={name} type="radio" value={value} ref={register} />
               {data[value].name}
             </label>
-            <br />
           </div>
         ))}
       </fieldset>
-      <br />
     </>
   );
 };

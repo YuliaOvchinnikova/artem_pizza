@@ -1,33 +1,34 @@
 import { Route, Switch } from "react-router-dom";
-import { useForm } from "react-hook-form";
+import { Navigation } from "./Navigation";
+import { AddIngredient } from "./AddIngredient";
+import { IngredientList } from "./IngredientList";
+import { Ingredient } from "./Ingredient";
+import { Home } from "./Home";
 
 function App() {
-  const { register, handleSubmit } = useForm();
-
-  const onSubmit = (data) => {
-    console.log(data);
-  };
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <div>
-        <label htmlFor="price">Price:</label>
-        <input id="price" ref={register} type="tel" name="price" />
-      </div>
-      <div>
-        <label htmlFor="name">Name:</label>
-        <input id="name" ref={register} type="text" name="name" />
-      </div>
-      <div>
-        <label htmlFor="slug">Slug:</label>
-        <input id="slug" ref={register} type="text" name="slug" />
-      </div>
-      <div>
-        <label htmlFor="picture">Picture:</label>
-        <input id="picture" ref={register} type="file" name="picture" />
-      </div>
+    <>
+      <Navigation />
+      <Switch>
+        <Route path="/addIngredient">
+          <AddIngredient />
+        </Route>
+        <Route path="/ingredientList/:id">
+          <Ingredient />
+        </Route>
+        <Route path="/ingredientList">
+          <IngredientList />
+        </Route>
 
-      <button>Submit</button>
-    </form>
+        <Route exact path="/">
+          <Home />
+        </Route>
+
+        {/* <Route>
+          <PageNotFoundPage />
+        </Route> */}
+      </Switch>
+    </>
   );
 }
 

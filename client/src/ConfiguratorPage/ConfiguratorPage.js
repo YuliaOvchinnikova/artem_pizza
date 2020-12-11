@@ -1,31 +1,54 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { calculateSum } from "./../calculateSum";
 import * as DATA from "./../pizzaData";
 import { usePizza } from "./../PizzaContext";
+import { useData } from "./../DataContext";
 import { useForm } from "react-hook-form";
 import { RadioSet } from "./RadioSet";
 import { CheckboxSet } from "./CheckboxSet";
+import { getIngredients } from "./../api";
 
 export const ConfiguratorPage = () => {
   const history = useHistory();
   const { setPizza } = usePizza();
 
+  const [isLoading, setIsLoading] = useState(true);
+  const { data, setData } = useData();
+
+  const loadData = async () => {
+    const dataFromServer = await getIngredients();
+    setData(dataFromServer.map((i) => ({ ...i, price: parseInt(i.price) })));
+    setIsLoading(false);
+  };
+
+  useEffect(() => {
+    loadData();
+  }, []);
+
   const { register, handleSubmit, watch } = useForm({
     defaultValues: {
-      size: "small",
-      dough: "thin",
-      sauce: "tomato",
+      size: "size_small",
+      dough: "dough_thin",
+      sauce: "tomato sauce",
       ingredients: [],
     },
   });
 
+  if (isLoading) {
+    return <>Loading...</>;
+  }
+
   const values = watch();
-  const sum = calculateSum(values);
+  const sum = calculateSum(values, data);
 
   const onSubmit = (data) => {
     setPizza(data);
     history.push("/order");
+  };
+
+  const getDataByCategory = (category) => {
+    return data.filter((i) => i.category === category);
   };
 
   return (
@@ -37,49 +60,43 @@ export const ConfiguratorPage = () => {
         <RadioSet
           text="size"
           name="size"
-          values={["small", "large"]}
+          values={DATA.SIZE}
           register={register}
-          data={DATA.SIZE}
         />
 
         <RadioSet
           text="dough"
           name="dough"
-          values={["thin", "thick"]}
+          values={DATA.DOUGH}
           register={register}
-          data={DATA.DOUGH}
         />
 
         <RadioSet
           text="sauce"
           name="sauce"
-          values={["tomato", "white", "hot"]}
+          values={getDataByCategory("Sauce")}
           register={register}
-          data={DATA.SAUCE}
         />
 
         <CheckboxSet
           text="cheese"
           name="ingredients"
-          values={["mozzarella", "cheddar", "dorblu"]}
+          values={getDataByCategory("Cheese")}
           register={register}
-          data={DATA.INGREDIENTS}
         />
 
         <CheckboxSet
           text="vegetables"
           name="ingredients"
-          values={["tomato", "mushrooms", "paprika"]}
+          values={getDataByCategory("Vegetables")}
           register={register}
-          data={DATA.INGREDIENTS}
         />
 
         <CheckboxSet
           text="meat"
           name="ingredients"
-          values={["bacon", "pepperoni", "ham"]}
+          values={getDataByCategory("Meat")}
           register={register}
-          data={DATA.INGREDIENTS}
         />
 
         <button>Your order: {sum} RUB</button>

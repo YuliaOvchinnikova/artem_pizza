@@ -1,15 +1,14 @@
-import * as DATA from './pizzaData';
+import * as DATA from "./pizzaData";
 
+export const calculateSum = ({ size, dough, sauce, ingredients }, data) => {
+  let totalSum = DATA.BASE_PRICE;
+  totalSum += DATA.SIZE.find((s) => s.slug === size).price;
+  totalSum += DATA.DOUGH.find((d) => d.slug === dough).price;
+  totalSum += data.find((s) => s.slug === sauce).price;
 
-export const calculateSum = ({ size, dough, sauce, ingredients }) => {
-    let totalSum = DATA.BASE_PRICE;
-    totalSum += DATA.SIZE[size].price;
-    totalSum += DATA.DOUGH[dough].price;
-    totalSum += DATA.SAUCE[sauce].price;
+  ingredients.forEach((i) => {
+    totalSum += data.find((data_i) => data_i.slug === i).price;
+  });
 
-    ingredients.forEach(i => {
-        totalSum += DATA.INGREDIENTS[i].price;
-    })
-
-    return totalSum;
+  return totalSum;
 };

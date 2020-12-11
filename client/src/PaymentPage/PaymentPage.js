@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import { usePizza } from "./../PizzaContext";
+import { createNewOrder } from "./../api";
+import { Redirect } from "react-router-dom";
 
 export const normalizeCardNumber = (value) => {
   if (
@@ -30,8 +33,20 @@ export const getCardType = (firstCharacter) => {
 export const PaymentPage = () => {
   const { register, handleSubmit, setValue } = useForm();
   const [cardType, setCardType] = useState("");
+  const { pizza } = usePizza();
 
-  const onSubmit = (data) => {
+  if (!pizza) {
+    return <Redirect to="/" />;
+  }
+
+  const onSubmit = async (data) => {
+    const obj = {
+      ingredients: [pizza.size, pizza.dough, pizza.sauce, ...pizza.ingredients],
+      address: data.address,
+      name: data.name,
+      card_number: data.cardNumber,
+    };
+    const result = await createNewOrder(obj);
     let cardType = getCardType(data.cardNumber[0]);
     setCardType(cardType);
   };
@@ -57,6 +72,14 @@ export const PaymentPage = () => {
             onChange={onChange}
             ref={register}
           />
+          <label>
+            Name:
+            <input name="name" ref={register} />
+          </label>
+          <label>
+            Address:
+            <input name="address" ref={register} />
+          </label>
           <p>{cardType}</p>
         </div>
         <button>Submit</button>

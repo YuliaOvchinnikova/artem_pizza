@@ -1,12 +1,14 @@
 import * as DATA from "./../pizzaData";
 import { calculateSum } from "./../calculateSum";
 import { Link, Redirect } from "react-router-dom";
-import { usePizza } from "./../PizzaContext";
-import { useData } from "./../DataContext";
+
+import { useSelector } from "react-redux";
+import { getPizza } from "./../state/pizza/selectors";
+import { getIngredients } from "./../state/ingredients/selectors";
 
 export const OrderPage = () => {
-  const { pizza } = usePizza();
-  const { data } = useData();
+  const pizza = useSelector(getPizza);
+  const data = useSelector(getIngredients);
 
   if (!pizza) {
     return <Redirect to="/" />;

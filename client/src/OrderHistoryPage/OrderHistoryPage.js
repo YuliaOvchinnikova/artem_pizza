@@ -1,17 +1,15 @@
-import { useState, useEffect } from "react";
-import { getOrders } from "./../api";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getIsLoading, getOrders } from "./../state/orders/selectors";
+import { fetchOrders } from "./../state/orders/thunk";
 
 export const OrderHistoryPage = () => {
-  const [isLoading, setIsLoading] = useState(true);
-  const [data, setData] = useState();
+  const dispatch = useDispatch();
+  const isLoading = useSelector(getIsLoading);
+  const data = useSelector(getOrders);
 
   useEffect(() => {
-    const loadData = async () => {
-      const orders = await getOrders();
-      setData(orders);
-      setIsLoading(false);
-    };
-    loadData();
+    dispatch(fetchOrders());
   }, []);
 
   if (isLoading) {

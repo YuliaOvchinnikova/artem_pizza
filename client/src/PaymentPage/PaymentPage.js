@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { usePizza } from "./../PizzaContext";
 import { createNewOrder } from "./../api";
 import { Redirect } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { getPizza } from "./../state/pizza/selectors";
 
 export const normalizeCardNumber = (value) => {
   if (
@@ -33,7 +34,7 @@ export const getCardType = (firstCharacter) => {
 export const PaymentPage = () => {
   const { register, handleSubmit, setValue } = useForm();
   const [cardType, setCardType] = useState("");
-  const { pizza } = usePizza();
+  const pizza = useSelector(getPizza);
 
   if (!pizza) {
     return <Redirect to="/" />;

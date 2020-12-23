@@ -1,29 +1,34 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { calculateSum } from "./../calculateSum";
 import * as DATA from "./../pizzaData";
-import { usePizza } from "./../PizzaContext";
-import { useData } from "./../DataContext";
 import { useForm } from "react-hook-form";
 import { RadioSet } from "./RadioSet";
 import { CheckboxSet } from "./CheckboxSet";
-import { getIngredients } from "./../api";
+import {
+  getIsLoading,
+  getIngredientsByCategory,
+  getIngredients,
+} from "./../state/ingredients/selectors";
+import { fetchIngredients } from "./../state/ingredients/thunk";
+import { setPizza } from "./../state/pizza/actions";
 
 export const ConfiguratorPage = () => {
   const history = useHistory();
-  const { setPizza } = usePizza();
+  const dispatch = useDispatch();
 
-  const [isLoading, setIsLoading] = useState(true);
-  const { data, setData } = useData();
+  const isLoading = useSelector(getIsLoading);
 
-  const loadData = async () => {
-    const dataFromServer = await getIngredients();
-    setData(dataFromServer.map((i) => ({ ...i, price: parseInt(i.price) })));
-    setIsLoading(false);
-  };
+  const sauces = useSelector(getIngredientsByCategory("Sauce"));
+  const cheeses = useSelector(getIngredientsByCategory("Cheese"));
+  const vegetables = useSelector(getIngredientsByCategory("Vegetables"));
+  const meat = useSelector(getIngredientsByCategory("Meat"));
+
+  const allIngredients = useSelector(getIngredients);
 
   useEffect(() => {
-    loadData();
+    dispatch(fetchIngredients());
   }, []);
 
   const { register, handleSubmit, watch } = useForm({
@@ -40,15 +45,11 @@ export const ConfiguratorPage = () => {
   }
 
   const values = watch();
-  const sum = calculateSum(values, data);
+  const sum = calculateSum(values, allIngredients);
 
   const onSubmit = (data) => {
-    setPizza(data);
+    dispatch(setPizza(data));
     history.push("/order");
-  };
-
-  const getDataByCategory = (category) => {
-    return data.filter((i) => i.category === category);
   };
 
   return (
@@ -74,28 +75,28 @@ export const ConfiguratorPage = () => {
         <RadioSet
           text="sauce"
           name="sauce"
-          values={getDataByCategory("Sauce")}
+          values={sauces}
           register={register}
         />
 
         <CheckboxSet
           text="cheese"
           name="ingredients"
-          values={getDataByCategory("Cheese")}
+          values={cheeses}
           register={register}
         />
 
         <CheckboxSet
           text="vegetables"
           name="ingredients"
-          values={getDataByCategory("Vegetables")}
+          values={vegetables}
           register={register}
         />
 
         <CheckboxSet
           text="meat"
           name="ingredients"
-          values={getDataByCategory("Meat")}
+          values={meat}
           register={register}
         />
 

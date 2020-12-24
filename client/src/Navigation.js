@@ -1,6 +1,10 @@
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { getIsAuthorized } from "./state/auth/selectors";
 
 export const Navigation = () => {
+  const isAuthorized = useSelector(getIsAuthorized);
+
   return (
     <>
       <nav>
@@ -23,9 +27,11 @@ export const Navigation = () => {
           <li>
             <Link to="/order">Order</Link>
           </li>
-          <li>
-            <Link to="/orderHistory">Order History</Link>
-          </li>
+          {isAuthorized && (
+            <li>
+              <Link to="/orderHistory">Order History</Link>
+            </li>
+          )}
         </ul>
       </nav>
     </>

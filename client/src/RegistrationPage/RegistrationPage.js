@@ -1,21 +1,35 @@
-import React, { useState } from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
+import { getIsAuthorized } from "./../state/auth/selectors";
+import { authLogin, authLogout } from "./../state/auth/actions";
 
 export const RegistrationPage = () => {
-  const [loginName, setLoginName] = useState("");
-  const [password, setPassword] = useState("");
-
   const { register, handleSubmit, errors } = useForm();
+  const dispatch = useDispatch();
+
+  const isAuthorized = useSelector(getIsAuthorized);
+
+  const onLogout = () => {
+    dispatch(authLogout());
+  };
+
+  if (isAuthorized) {
+    return (
+      <>
+        <h2>You are authorized!</h2>
+        <button onClick={onLogout}>Logout</button>
+      </>
+    );
+  }
 
   const onSubmit = (data) => {
-    console.log(data);
-    setLoginName(data.loginName);
-    setPassword(data.password);
+    dispatch(authLogin(data.loginName, data.password));
   };
 
   return (
     <div>
-      <h1>Registration</h1> <br />
+      <h1>Login</h1> <br />
       <form onSubmit={handleSubmit(onSubmit)}>
         <div>
           <label>

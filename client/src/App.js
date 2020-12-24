@@ -9,8 +9,12 @@ import { PageNotFoundPage } from "./PageNotFoundPage";
 import { PaymentPage } from "./PaymentPage";
 import { RegistrationPage } from "./RegistrationPage";
 import { Navigation } from "./Navigation";
+import { useSelector } from "react-redux";
+import { getIsAuthorized } from "./state/auth/selectors";
 
 function App() {
+  const isAuthorized = useSelector(getIsAuthorized);
+
   return (
     <>
       <Navigation />
@@ -24,9 +28,11 @@ function App() {
         <Route path="/login">
           <LoginPage />
         </Route>
-        <Route path="/orderHistory">
-          <OrderHistoryPage />
-        </Route>
+        {isAuthorized && (
+          <Route path="/orderHistory">
+            <OrderHistoryPage />
+          </Route>
+        )}
         <Route path="/order">
           <OrderPage />
         </Route>

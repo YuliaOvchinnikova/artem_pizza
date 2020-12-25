@@ -1,4 +1,4 @@
-export const ordersReducer = (state = "loading", action) => {
+export const orderHistoryReducer = (state = "loading", action) => {
   switch (action.type) {
     case "orders/success": {
       return action.data;

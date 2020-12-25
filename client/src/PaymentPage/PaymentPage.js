@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { createNewOrder } from "./../api";
 import { Redirect } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { getPizza } from "./../state/pizza/selectors";
+import { useDispatch, useSelector } from "react-redux";
+import { getPizza, getOrderState } from "../state/order/selectors";
+import { setPaymentData } from "./../state/order/actions";
+import { createOrder } from "./../state/order/thunk";
 
 export const normalizeCardNumber = (value) => {
   if (
@@ -32,22 +33,28 @@ export const getCardType = (firstCharacter) => {
 };
 
 export const PaymentPage = () => {
+  const dispatch = useDispatch();
+
   const { register, handleSubmit, setValue } = useForm();
   const [cardType, setCardType] = useState("");
   const pizza = useSelector(getPizza);
+  const orderState = useSelector(getOrderState);
 
   if (!pizza) {
     return <Redirect to="/" />;
   }
+  if (orderState === "sending") {
+    return <p>Sending</p>;
+  } else if (orderState === "success") {
+    return <Redirect to="/orderConfirmation" />;
+  } else if (orderState === "error") {
+    return <p>Error</p>;
+  }
 
   const onSubmit = async (data) => {
-    const obj = {
-      ingredients: [pizza.size, pizza.dough, pizza.sauce, ...pizza.ingredients],
-      address: data.address,
-      name: data.name,
-      card_number: data.cardNumber,
-    };
-    const result = await createNewOrder(obj);
+    dispatch(setPaymentData(data));
+    dispatch(createOrder(pizza, data));
+
     let cardType = getCardType(data.cardNumber[0]);
     setCardType(cardType);
   };

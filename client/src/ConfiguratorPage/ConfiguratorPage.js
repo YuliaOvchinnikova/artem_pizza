@@ -12,7 +12,7 @@ import {
   getIngredients,
 } from "./../state/ingredients/selectors";
 import { fetchIngredients } from "./../state/ingredients/thunk";
-import { setPizza } from "./../state/pizza/actions";
+import { setPizza } from "./../state/order/actions";
 
 export const ConfiguratorPage = () => {
   const history = useHistory();

@@ -1,10 +1,10 @@
-import { useState } from "react";
-import { Route, Link, Switch } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import { BillPage } from "./BillPage";
 import { ConfiguratorPage } from "./ConfiguratorPage";
 import { LoginPage } from "./LoginPage";
 import { OrderHistoryPage } from "./OrderHistoryPage";
 import { OrderPage } from "./OrderPage";
+import { OrderConfirmationPage } from "./OrderConfirmationPage";
 import { PageNotFoundPage } from "./PageNotFoundPage";
 import { PaymentPage } from "./PaymentPage";
 import { RegistrationPage } from "./RegistrationPage";
@@ -38,6 +38,9 @@ function App() {
         </Route>
         <Route path="/payment">
           <PaymentPage />
+        </Route>
+        <Route path="/orderConfirmation">
+          <OrderConfirmationPage />
         </Route>
         <Route path="/registration">
           <RegistrationPage />

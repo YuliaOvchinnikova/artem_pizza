@@ -3,7 +3,7 @@ import { calculateSum } from "./../calculateSum";
 import { Link, Redirect } from "react-router-dom";
 
 import { useSelector } from "react-redux";
-import { getPizza } from "./../state/pizza/selectors";
+import { getPizza } from "./../state/order/selectors";
 import { getIngredients } from "./../state/ingredients/selectors";
 
 export const OrderPage = () => {

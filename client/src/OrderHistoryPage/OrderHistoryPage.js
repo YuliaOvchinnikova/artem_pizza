@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getIsLoading, getOrders } from "./../state/orders/selectors";
-import { fetchOrders } from "./../state/orders/thunk";
+import { getIsLoading, getOrders } from "../state/orderHistory/selectors";
+import { fetchOrders } from "../state/orderHistory/thunk";
 
 export const OrderHistoryPage = () => {
   const dispatch = useDispatch();

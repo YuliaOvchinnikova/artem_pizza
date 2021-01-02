@@ -1,3 +1,3 @@
-export const getPizza = (state) => state.order.pizza;
-export const getPaymentData = (state) => state.order.paymentData;
-export const getOrderState = (state) => state.order.state;
+export const getOrderPizza = (state) => state.order.pizza;
+export const getOrderPayment = (state) => state.order.payment;
+export const getOrderStatus = (state) => state.order.status;

@@ -3,11 +3,11 @@ import { calculateSum } from "./../calculateSum";
 import { Link, Redirect } from "react-router-dom";
 
 import { useSelector } from "react-redux";
-import { getPizza } from "./../state/order/selectors";
+import { getOrderPizza } from "./../state/order/selectors";
 import { getIngredients } from "./../state/ingredients/selectors";
 
 export const OrderPage = () => {
-  const pizza = useSelector(getPizza);
+  const pizza = useSelector(getOrderPizza);
   const data = useSelector(getIngredients);
 
   if (!pizza) {

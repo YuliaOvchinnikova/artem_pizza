@@ -2,7 +2,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { getIsAuthorized } from "./../state/auth/selectors";
-import { authLogin, authLogout } from "./../state/auth/actions";
+import { login, logout } from "./../state/auth/auth";
 
 export const LoginPage = () => {
   const { register, handleSubmit, errors } = useForm();
@@ -11,7 +11,7 @@ export const LoginPage = () => {
   const isAuthorized = useSelector(getIsAuthorized);
 
   const onLogout = () => {
-    dispatch(authLogout());
+    dispatch(logout());
   };
 
   if (isAuthorized) {
@@ -24,7 +24,7 @@ export const LoginPage = () => {
   }
 
   const onSubmit = (data) => {
-    dispatch(authLogin(data.loginName, data.password));
+    dispatch(login({ name: data.loginName, password: data.password }));
   };
 
   return (

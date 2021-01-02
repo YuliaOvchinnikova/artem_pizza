@@ -2,7 +2,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { getIsAuthorized } from "./../state/auth/selectors";
-import { authLogin, authLogout } from "./../state/auth/actions";
+import { login, logout } from "./../state/auth/auth";
 
 export const RegistrationPage = () => {
   const { register, handleSubmit, errors } = useForm();
@@ -11,7 +11,7 @@ export const RegistrationPage = () => {
   const isAuthorized = useSelector(getIsAuthorized);
 
   const onLogout = () => {
-    dispatch(authLogout());
+    dispatch(logout());
   };
 
   if (isAuthorized) {
@@ -24,7 +24,7 @@ export const RegistrationPage = () => {
   }
 
   const onSubmit = (data) => {
-    dispatch(authLogin(data.loginName, data.password));
+    dispatch(login(data));
   };
 
   return (
@@ -35,7 +35,7 @@ export const RegistrationPage = () => {
           <label>
             Login name:
             <input
-              name="loginName"
+              name="name"
               placeholder="Login"
               ref={register({
                 required: { value: true, message: "Login is required field" },
@@ -46,7 +46,7 @@ export const RegistrationPage = () => {
               })}
             />
           </label>
-          {errors.loginName && <p>{errors.loginName.message}</p>}
+          {errors.name && <p>{errors.name.message}</p>}
         </div>
 
         <div>

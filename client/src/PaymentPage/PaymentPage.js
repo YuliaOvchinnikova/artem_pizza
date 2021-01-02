@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Redirect } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getPizza, getOrderState } from "../state/order/selectors";
-import { setPaymentData } from "./../state/order/actions";
+import { getOrderPizza, getOrderStatus } from "../state/order/selectors";
 import { createOrder } from "./../state/order/thunk";
+import { set_payment_data } from "./../state/order/order";
 
 export const normalizeCardNumber = (value) => {
   if (
@@ -29,7 +29,7 @@ export const getCardType = (firstCharacter) => {
   } else if (firstCharacter === "5") {
     return "MasterCard";
   }
-  return "";
+  return "Unknown card type";
 };
 
 export const PaymentPage = () => {
@@ -37,31 +37,30 @@ export const PaymentPage = () => {
 
   const { register, handleSubmit, setValue } = useForm();
   const [cardType, setCardType] = useState("");
-  const pizza = useSelector(getPizza);
-  const orderState = useSelector(getOrderState);
+  const pizza = useSelector(getOrderPizza);
+  const status = useSelector(getOrderStatus);
 
   if (!pizza) {
     return <Redirect to="/" />;
   }
-  if (orderState === "sending") {
+  if (status === "sending") {
     return <p>Sending</p>;
-  } else if (orderState === "success") {
+  } else if (status === "success") {
     return <Redirect to="/orderConfirmation" />;
-  } else if (orderState === "error") {
+  } else if (status === "error") {
     return <p>Error</p>;
   }
 
-  const onSubmit = async (data) => {
-    dispatch(setPaymentData(data));
-    dispatch(createOrder(pizza, data));
-
-    let cardType = getCardType(data.cardNumber[0]);
-    setCardType(cardType);
+  const onSubmit = async (paymentData) => {
+    dispatch(set_payment_data(paymentData));
+    dispatch(createOrder({ pizza, paymentData }));
   };
 
   const onChange = (event) => {
     const { value } = event.target;
     setValue("cardNumber", normalizeCardNumber(value));
+    let cardType = getCardType(value[0]);
+    setCardType(cardType);
   };
 
   return (

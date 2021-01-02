@@ -1,9 +1,9 @@
 import { createNewOrder } from "../../api";
-import { requestOrder, orderSuccess, orderError } from "./actions";
+import { createAsyncThunk } from "@reduxjs/toolkit";
 
-export const createOrder = (pizza, paymentData) => async (dispatch) => {
-  dispatch(requestOrder());
-  try {
+export const createOrder = createAsyncThunk(
+  "order/createOrder",
+  async ({ pizza, paymentData }) => {
     const order = {
       ingredients: [pizza.size, pizza.dough, pizza.sauce, ...pizza.ingredients],
       address: paymentData.address,
@@ -11,9 +11,5 @@ export const createOrder = (pizza, paymentData) => async (dispatch) => {
       card_number: paymentData.cardNumber,
     };
     await createNewOrder(order);
-    dispatch(orderSuccess());
-  } catch (error) {
-    console.log(error);
-    dispatch(orderError());
   }
-};
+);

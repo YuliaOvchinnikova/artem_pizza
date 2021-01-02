@@ -1,8 +1,5 @@
 export const getOrders = (state) => {
-  if (state.orderHistory === "loading") {
-    return [];
-  }
-  return state.orderHistory;
+  return state.orderHistory.orders;
 };
 
-export const getIsLoading = (state) => state.orderHistory === "loading";
+export const getOrderHistoryStatus = (state) => state.orderHistory.status;

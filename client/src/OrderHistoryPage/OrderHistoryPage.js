@@ -1,19 +1,24 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getIsLoading, getOrders } from "../state/orderHistory/selectors";
-import { fetchOrders } from "../state/orderHistory/thunk";
+import {
+  getOrderHistoryStatus,
+  getOrders,
+} from "../state/orderHistory/selectors";
+import { fetchOrderHistory } from "../state/orderHistory/thunk";
 
 export const OrderHistoryPage = () => {
   const dispatch = useDispatch();
-  const isLoading = useSelector(getIsLoading);
+  const status = useSelector(getOrderHistoryStatus);
   const data = useSelector(getOrders);
 
   useEffect(() => {
-    dispatch(fetchOrders());
+    dispatch(fetchOrderHistory());
   }, []);
 
-  if (isLoading) {
+  if (status === "loading") {
     return <>Loading...</>;
+  } else if (status === "error") {
+    return <>Error.</>;
   }
 
   return (

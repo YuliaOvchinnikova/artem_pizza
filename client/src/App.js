@@ -1,5 +1,4 @@
 import { Route, Switch } from "react-router-dom";
-import { BillPage } from "./BillPage";
 import { ConfiguratorPage } from "./ConfiguratorPage";
 import { LoginPage } from "./LoginPage";
 import { OrderHistoryPage } from "./OrderHistoryPage";
@@ -19,9 +18,6 @@ function App() {
     <>
       <Navigation />
       <Switch>
-        <Route path="/bill">
-          <BillPage />
-        </Route>
         <Route exact path="/">
           <ConfiguratorPage />
         </Route>

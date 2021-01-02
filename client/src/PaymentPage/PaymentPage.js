@@ -2,9 +2,12 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Redirect } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getOrderPizza, getOrderStatus } from "../state/order/selectors";
-import { createOrder } from "./../state/order/thunk";
-import { set_payment_data } from "./../state/order/order";
+import {
+  getOrderPizza,
+  getOrderStatus,
+  createOrder,
+  set_payment_data,
+} from "../state";
 
 export const normalizeCardNumber = (value) => {
   if (

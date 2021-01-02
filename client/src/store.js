@@ -1,9 +1,6 @@
 import { createStore, applyMiddleware, combineReducers } from "redux";
 import thunk from "redux-thunk";
-import { ingredients } from "./state/ingredients/ingredients";
-import { order } from "./state/order/order";
-import { orderHistory } from "./state/orderHistory/orderHistory";
-import { auth } from "./state/auth/auth";
+import { ingredients, order, orderHistory, auth } from "./state";
 import logger from "redux-logger";
 
 import { configureStore } from "@reduxjs/toolkit";

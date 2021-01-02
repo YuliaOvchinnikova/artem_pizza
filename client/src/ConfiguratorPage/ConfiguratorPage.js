@@ -10,9 +10,9 @@ import {
   getIngredientsStatus,
   getIngredientsByCategory,
   getIngredients,
-} from "./../state/ingredients/selectors";
-import { fetchIngredients } from "./../state/ingredients/thunk";
-import { set_pizza } from "./../state/order/order";
+  fetchIngredients,
+  set_pizza,
+} from "./../state";
 
 export const ConfiguratorPage = () => {
   const history = useHistory();

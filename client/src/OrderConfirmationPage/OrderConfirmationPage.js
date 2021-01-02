@@ -1,4 +1,4 @@
-import { getOrderPayment } from "../state/order/selectors";
+import { getOrderPayment } from "../state";
 import { useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
 

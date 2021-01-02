@@ -1,8 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { getIsAuthorized } from "./../state/auth/selectors";
-import { login, logout } from "./../state/auth/auth";
+import { getIsAuthorized, login, logout } from "./../state";
 
 export const RegistrationPage = () => {
   const { register, handleSubmit, errors } = useForm();

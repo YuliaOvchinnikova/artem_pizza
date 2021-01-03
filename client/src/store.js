@@ -1,5 +1,3 @@
-import { createStore, applyMiddleware, combineReducers } from "redux";
-import thunk from "redux-thunk";
 import { ingredients, order, orderHistory, auth } from "./state";
 import logger from "redux-logger";
 

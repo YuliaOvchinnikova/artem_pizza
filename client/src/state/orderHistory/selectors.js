@@ -1,5 +1,8 @@
 export const getOrders = (state) => {
-  return state.orderHistory.orders;
+  if (state.orderHistory.status === "success") {
+    return state.orderHistory.orders;
+  }
+  return [];
 };
 
 export const getOrderHistoryStatus = (state) => state.orderHistory.status;

@@ -1,7 +1,8 @@
 const PORT = "3001";
+const ADDRESS = "https://jcmvi.sse.codesandbox.io";
 
 export const createNewOrder = async (data) => {
-  return await fetch(`http://localhost:${PORT}/orders`, {
+  return await fetch(`${ADDRESS}/orders`, {
     method: "POST",
     body: JSON.stringify(data),
     headers: {
@@ -11,14 +12,10 @@ export const createNewOrder = async (data) => {
 };
 
 export const getOrders = async () => {
-  return await fetch(`http://localhost:${PORT}/orders`).then((res) =>
-    res.json()
-  );
+  return await fetch(`${ADDRESS}/orders`).then((res) => res.json());
 };
 
 //new
 export const getIngredients = async () => {
-  return await fetch(`http://localhost:${PORT}/ingredients`).then((res) =>
-    res.json()
-  );
+  return await fetch(`${ADDRESS}/ingredients`).then((res) => res.json());
 };

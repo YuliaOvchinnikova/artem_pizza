@@ -9,3 +9,9 @@ export const DOUGH = [
   { id: "dough_thin", price: 0, slug: "dough_thin", name: "thin" },
   { id: "dough_thick", price: 0, slug: "dough_thick", name: "thick" },
 ];
+
+export const SAUCES = [
+  { id: "sauce_tomato", price: 0, slug: "sauce_tomato", name: "tomato sauce" },
+  { id: "sauce_white", price: 0, slug: "sauce_white", name: "white sauce" },
+  { id: "sauce_hot", price: 0, slug: "sauce_hot", name: "hot sauce" },
+];

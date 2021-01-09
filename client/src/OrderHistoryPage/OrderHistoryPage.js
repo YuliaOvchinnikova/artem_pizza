@@ -10,7 +10,7 @@ export const OrderHistoryPage = () => {
 
   useEffect(() => {
     dispatch(fetchOrders());
-  }, []);
+  }, [dispatch]);
 
   if (isLoading) {
     return <>Loading...</>;

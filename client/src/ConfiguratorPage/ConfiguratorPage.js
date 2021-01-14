@@ -20,10 +20,9 @@ export const ConfiguratorPage = () => {
 
   const status = useSelector(getIngredientsStatus);
 
-  const sauces = useSelector(getIngredientsByCategory("Sauce"));
-  const cheeses = useSelector(getIngredientsByCategory("Cheese"));
-  const vegetables = useSelector(getIngredientsByCategory("Vegetables"));
-  const meat = useSelector(getIngredientsByCategory("Meat"));
+  const cheeses = useSelector(getIngredientsByCategory("cheese"));
+  const vegetables = useSelector(getIngredientsByCategory("vegetables"));
+  const meat = useSelector(getIngredientsByCategory("meat"));
 
   const allIngredients = useSelector(getIngredients);
 
@@ -35,7 +34,7 @@ export const ConfiguratorPage = () => {
     defaultValues: {
       size: "size_small",
       dough: "dough_thin",
-      sauce: "tomato sauce",
+      sauce: "sauce_tomato",
       ingredients: [],
     },
   });
@@ -77,7 +76,7 @@ export const ConfiguratorPage = () => {
         <RadioSet
           text="sauce"
           name="sauce"
-          values={sauces}
+          values={DATA.SAUCES}
           register={register}
         />
 

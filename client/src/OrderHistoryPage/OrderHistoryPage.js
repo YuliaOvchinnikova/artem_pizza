@@ -8,8 +8,8 @@ export const OrderHistoryPage = () => {
   const data = useSelector(getOrders);
 
   useEffect(() => {
-    dispatch(fetchOrderHistory());
-  }, []);
+    dispatch(fetchOrders());
+  }, [dispatch]);
 
   if (status === "loading") {
     return <>Loading...</>;

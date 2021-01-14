@@ -29,7 +29,7 @@ export const ConfiguratorPage = () => {
 
   useEffect(() => {
     dispatch(fetchIngredients());
-  }, []);
+  }, [dispatch]);
 
   const { register, handleSubmit, watch } = useForm({
     defaultValues: {

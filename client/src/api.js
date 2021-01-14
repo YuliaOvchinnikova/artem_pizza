@@ -1,4 +1,3 @@
-const PORT = "3001";
 const ADDRESS = "https://jcmvi.sse.codesandbox.io";
 
 export const createNewOrder = async (data) => {

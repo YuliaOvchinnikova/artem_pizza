@@ -7,18 +7,18 @@ import { useForm } from "react-hook-form";
 import { RadioSet } from "./RadioSet";
 import { CheckboxSet } from "./CheckboxSet";
 import {
-  getIsLoading,
+  getIngredientsStatus,
   getIngredientsByCategory,
   getIngredients,
-} from "./../state/ingredients/selectors";
-import { fetchIngredients } from "./../state/ingredients/thunk";
-import { setPizza } from "./../state/order/actions";
+  fetchIngredients,
+  set_pizza,
+} from "./../state";
 
 export const ConfiguratorPage = () => {
   const history = useHistory();
   const dispatch = useDispatch();
 
-  const isLoading = useSelector(getIsLoading);
+  const status = useSelector(getIngredientsStatus);
 
   const sauces = useSelector(getIngredientsByCategory("Sauce"));
   const cheeses = useSelector(getIngredientsByCategory("Cheese"));
@@ -40,15 +40,17 @@ export const ConfiguratorPage = () => {
     },
   });
 
-  if (isLoading) {
+  if (status === "loading") {
     return <>Loading...</>;
+  } else if (status === "error") {
+    return <>Error...</>;
   }
 
   const values = watch();
   const sum = calculateSum(values, allIngredients);
 
   const onSubmit = (data) => {
-    dispatch(setPizza(data));
+    dispatch(set_pizza(data));
     history.push("/order");
   };
 

@@ -16,7 +16,7 @@ function App() {
 
   return (
     <>
-      <Navigation />
+      {/*   <Navigation /> */}
       <Switch>
         <Route exact path="/">
           <ConfiguratorPage />

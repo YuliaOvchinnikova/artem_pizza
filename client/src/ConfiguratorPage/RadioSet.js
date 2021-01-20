@@ -1,9 +1,36 @@
 import React from "react";
+import styled from "styled-components";
+import {GRAY100} from "../colors";
 
-export const RadioSet = ({ text, name, values, register }) => {
+const SwitcherContainer = styled.div`
+    background-color: ${GRAY100};
+    border-radius: 12px;
+    padding: 2px;
+    display: flex;
+    overflow: auto;
+`
+
+const SwitcherItem = styled.div`
+    display: inline-block;
+    font-size: 14px;
+    padding: 4px 12px;
+    white-space: nowrap;
+
+    color: ${({isSelected}) => isSelected ? '#1F1F33' : '#4B4B7C'};
+    background: ${({isSelected}) => isSelected ? 'white' : 'transparent'};
+    border-radius: ${({isSelected}) => isSelected ? '10px' : 'inherit'};
+    font-weight: ${({isSelected}) => isSelected ? '500' : '400'};
+    box-shadow: ${({isSelected}) => isSelected && '0px 3px 4px rgba(75, 75, 124, 0.05), 0px 0px 2px rgba(75, 75, 124, 0.2)'};
+    cursor: ${({isSelected}) => isSelected ? 'default' : 'pointer'}
+`
+
+export const RadioSet = ({ text, name, values, register, watch }) => {
+  const watchValues = watch();
+
+  // TODO: make it work :)
   return (
     <>
-      <fieldset>
+      {/* <fieldset style={{display: 'none'}}>
         <legend>Choose {text}:</legend>
         {values.map((value) => (
           <div key={value.id}>
@@ -18,7 +45,13 @@ export const RadioSet = ({ text, name, values, register }) => {
             </label>
           </div>
         ))}
-      </fieldset>
+      </fieldset> */}
+      <SwitcherContainer>
+        {values.map((value, i) => (
+          <SwitcherItem isSelected={i === 0}>{value.name}</SwitcherItem>
+        ))}
+            
+        </SwitcherContainer>
     </>
   );
 };

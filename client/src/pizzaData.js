@@ -14,4 +14,8 @@ export const SAUCES = [
   { id: "sauce_tomato", price: 0, slug: "sauce_tomato", name: "tomato sauce" },
   { id: "sauce_white", price: 0, slug: "sauce_white", name: "white sauce" },
   { id: "sauce_hot", price: 0, slug: "sauce_hot", name: "hot sauce" },
+  { id: "sauce_shroom", price: 0, slug: "sauce_shroom", name: "mushroom sauce" },
+  { id: "sauce_soy", price: 0, slug: "sauce_soy", name: "soy sauce" },
+  { id: "sauce_buldak", price: 0, slug: "sauce_buldak", name: "buldak sauce" },
+
 ];

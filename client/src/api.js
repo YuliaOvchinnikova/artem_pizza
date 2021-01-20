@@ -1,4 +1,4 @@
-const ADDRESS = "https://jcmvi.sse.codesandbox.io";
+const ADDRESS = "http://localhost:8080";
 
 export const createNewOrder = async (data) => {
   return await fetch(`${ADDRESS}/orders`, {

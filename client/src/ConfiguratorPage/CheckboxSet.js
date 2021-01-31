@@ -1,7 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-// import "./styleCheckboxSet.css";
-import bacon from "./assets/small_assets/bacon.svg";
 import { CheckboxItem } from "./CheckboxItem";
 
 const CheckboxContainer = styled.div`

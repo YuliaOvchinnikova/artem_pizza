@@ -16,7 +16,7 @@ function App() {
 
   return (
     <>
-      {/*   <Navigation /> */}
+      {/* <Navigation /> */}
       <Switch>
         <Route exact path="/">
           <ConfiguratorPage />
@@ -24,11 +24,11 @@ function App() {
         <Route path="/login">
           <LoginPage />
         </Route>
-        {isAuthorized && (
-          <Route path="/orderHistory">
-            <OrderHistoryPage />
-          </Route>
-        )}
+        {/* {isAuthorized && ( */}
+        <Route path="/orderHistory">
+          <OrderHistoryPage />
+        </Route>
+        {/* )} */}
         <Route path="/order">
           <OrderPage />
         </Route>

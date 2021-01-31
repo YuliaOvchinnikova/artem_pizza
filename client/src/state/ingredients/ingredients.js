@@ -3,6 +3,10 @@ import { fetchIngredients } from "./thunk";
 
 const initialState = { status: "loading", ingredients: [] };
 
+export const SUCCESS = "success";
+export const LOADING = "loading";
+export const ERROR = "error";
+
 export const ingredients = createSlice({
   name: "ingredients",
   initialState,

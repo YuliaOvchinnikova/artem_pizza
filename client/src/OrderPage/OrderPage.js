@@ -1,7 +1,6 @@
 import * as DATA from "./../pizzaData";
-import { calculateSum } from "./../calculateSum";
 import { Link, Redirect } from "react-router-dom";
-
+import { calculateSum } from "./../calculateSum";
 import { useSelector } from "react-redux";
 import { getOrderPizza, getIngredients } from "./../state";
 
@@ -22,7 +21,7 @@ export const OrderPage = () => {
       <ul>
         <li>Size: {DATA.SIZE.find((s) => s.slug === size).name}</li>
         <li>Dough: {DATA.DOUGH.find((d) => d.slug === dough).name}</li>
-        <li>Sauce: {data.find((s) => s.slug === sauce).name}</li>
+        <li>Sauce: {DATA.SAUCES.find((s) => s.slug === sauce).name}</li>
         <li>
           Toppings:{" "}
           {ingredients

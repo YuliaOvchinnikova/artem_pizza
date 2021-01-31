@@ -1,45 +1,37 @@
 import React, { useState } from "react";
-import styled from "styled-components";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { getIsAuthorized, login, logout } from "../state";
-import { NavBar } from "./NavBar";
+import { getIsAuthorized, login } from "../state";
+import { TopBarWithBackArrow } from "./../shared/TopBarWithBackArrow";
 import { LoginPageForm } from "./LoginPageForm";
-
-const GeneralFrame = styled.div``;
+import { Redirect } from "react-router-dom";
+import { AppTopField } from "./../shared/AppTopField";
+import { useHistory } from "react-router-dom";
 
 export const LoginPage = () => {
   const { register, watch, errors } = useForm();
   const dispatch = useDispatch();
   const [activated, setActivated] = useState();
+  const history = useHistory();
 
   const watchAllFields = watch();
 
   const isAuthorized = useSelector(getIsAuthorized);
 
-  const onLogout = () => {
-    dispatch(logout());
-  };
-
   if (isAuthorized) {
-    return (
-      <>
-        <h2>You are authorized!</h2>
-        <button onClick={onLogout}>Logout</button>
-      </>
-    );
+    return <Redirect to="/orderHistory" />;
   }
 
   const onSubmit = (data, error) => {
-    console.log(error);
     dispatch(login({ name: data.loginName, password: data.password }));
+    history.push("/orderHistory");
   };
 
   const onChange = () => {
     if (
-      watchAllFields != undefined &&
-      watchAllFields.loginName != "" &&
-      watchAllFields.password != ""
+      watchAllFields !== undefined &&
+      watchAllFields.loginName !== "" &&
+      watchAllFields.password !== ""
     ) {
       setActivated(true);
     } else {
@@ -49,7 +41,8 @@ export const LoginPage = () => {
 
   return (
     <>
-      <NavBar />
+      <AppTopField />
+      <TopBarWithBackArrow title="Login" />
       <LoginPageForm
         onSubmit={onSubmit}
         onChange={onChange}

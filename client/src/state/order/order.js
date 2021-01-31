@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { createOrder } from "./thunk";
 
-const initialState = { status: "creating", pizza: {}, payment: {} };
+const initialState = { status: "creating", pizza: null, payment: {} };
 
 export const order = createSlice({
   name: "order",

@@ -9,6 +9,5 @@ export const calculateSum = ({ size, dough, sauce, ingredients }, data) => {
   ingredients.forEach((i) => {
     totalSum += data.find((data_i) => data_i.slug === i).price;
   });
-
   return totalSum;
 };

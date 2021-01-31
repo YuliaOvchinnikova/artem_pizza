@@ -12,6 +12,8 @@ import {
   getIngredients,
   fetchIngredients,
   set_pizza,
+  INGREDIENTS_LOADING,
+  INGREDIENTS_ERROR,
 } from "./../state";
 import { AppTopField } from "./../shared/AppTopField";
 import styled from "styled-components";
@@ -159,9 +161,9 @@ export const ConfiguratorPage = () => {
     },
   });
 
-  if (status === "loading") {
+  if (status === INGREDIENTS_LOADING) {
     return <>Loading...</>;
-  } else if (status === "error") {
+  } else if (status === INGREDIENTS_ERROR) {
     return <>Error...</>;
   }
 

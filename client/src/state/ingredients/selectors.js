@@ -1,5 +1,7 @@
+import { INGREDIENTS_SUCCESS } from "./ingredients";
+
 export const getIngredients = (state) => {
-  if (state.ingredients.status === "success") {
+  if (state.ingredients.status === INGREDIENTS_SUCCESS) {
     return state.ingredients.ingredients;
   }
 
@@ -7,7 +9,7 @@ export const getIngredients = (state) => {
 };
 
 export const getIngredientsByCategory = (category) => (state) => {
-  if (state.ingredients.status === "success") {
+  if (state.ingredients.status === INGREDIENTS_SUCCESS) {
     return state.ingredients.ingredients.filter((i) => i.category === category);
   }
 

@@ -1,29 +1,34 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { createOrder } from "./thunk";
 
-const initialState = { status: "creating", pizza: null, payment: {} };
+export const ORDER_SUCCESS = "success";
+export const ORDER_CREATING = "creating";
+export const ORDER_SENDING = "sending";
+export const ORDER_ERROR = "error";
+
+const initialState = { status: ORDER_CREATING, pizza: null, payment: {} };
 
 export const order = createSlice({
   name: "order",
   initialState,
   extraReducers: {
     [createOrder.fulfilled]: (state) => {
-      state.status = "success";
+      state.status = ORDER_SUCCESS;
     },
     [createOrder.pending]: (state) => {
-      state.status = "sending";
+      state.status = ORDER_SENDING;
     },
     [createOrder.rejected]: (state) => {
-      state.status = "error";
+      state.status = ORDER_ERROR;
     },
   },
   reducers: {
     set_pizza: (state, action) => {
-      state.status = "creating";
+      state.status = ORDER_CREATING;
       state.pizza = action.payload;
     },
     set_payment_data: (state, action) => {
-      state.status = "creating";
+      state.status = ORDER_CREATING;
       state.payment = action.payload;
     },
   },

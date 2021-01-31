@@ -1,26 +1,26 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { fetchIngredients } from "./thunk";
 
-const initialState = { status: "loading", ingredients: [] };
+export const INGREDIENTS_SUCCESS = "success";
+export const INGREDIENTS_LOADING = "loading";
+export const INGREDIENTS_ERROR = "error";
 
-export const SUCCESS = "success";
-export const LOADING = "loading";
-export const ERROR = "error";
+const initialState = { status: INGREDIENTS_LOADING, ingredients: [] };
 
 export const ingredients = createSlice({
   name: "ingredients",
   initialState,
   extraReducers: {
     [fetchIngredients.fulfilled]: (state, action) => {
-      state.status = "success";
+      state.status = INGREDIENTS_SUCCESS;
       state.ingredients = action.payload;
     },
     [fetchIngredients.pending]: (state, action) => {
-      state.status = "loading";
+      state.status = INGREDIENTS_LOADING;
       state.ingredients = [];
     },
     [fetchIngredients.rejected]: (state) => {
-      state.status = "error";
+      state.status = INGREDIENTS_ERROR;
       state.ingredients = [];
     },
   },

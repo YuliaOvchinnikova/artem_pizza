@@ -1,5 +1,7 @@
+import { INGREDIENTS_SUCCESS } from "./orderHistory";
+
 export const getOrders = (state) => {
-  if (state.orderHistory.status === "success") {
+  if (state.orderHistory.status === INGREDIENTS_SUCCESS) {
     return state.orderHistory.orders;
   }
   return [];

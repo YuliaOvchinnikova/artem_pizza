@@ -1,7 +1,13 @@
 import styled from "styled-components";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getOrderHistoryStatus, getOrders, fetchOrderHistory } from "../state";
+import {
+  getOrderHistoryStatus,
+  getOrders,
+  fetchOrderHistory,
+  INGREDIENTS_LOADING,
+  INGREDIENTS_ERROR,
+} from "../state";
 import { TopBarWithBackArrow } from "./../shared/TopBarWithBackArrow";
 import { AppTopField } from "./../shared/AppTopField";
 
@@ -77,9 +83,9 @@ export const OrderHistoryPage = () => {
     dispatch(fetchOrderHistory());
   }, [dispatch]);
 
-  if (status === "loading") {
+  if (status === INGREDIENTS_LOADING) {
     return <>Loading...</>;
-  } else if (status === "error") {
+  } else if (status === INGREDIENTS_ERROR) {
     return <>Error.</>;
   }
 

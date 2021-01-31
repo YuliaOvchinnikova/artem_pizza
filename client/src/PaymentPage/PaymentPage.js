@@ -9,6 +9,9 @@ import {
   getIngredients,
   createOrder,
   set_payment_data,
+  ORDER_SUCCESS,
+  ORDER_SENDING,
+  ORDER_ERROR,
 } from "../state";
 import { getCardType } from "./../utils";
 import { DELIVERY_PRICE } from "./../pizzaData";
@@ -258,11 +261,11 @@ export const PaymentPage = () => {
 
   const watchAllFields = watch();
 
-  if (status === "sending") {
+  if (status === ORDER_SENDING) {
     return <p>Sending</p>;
-  } else if (status === "success") {
+  } else if (status === ORDER_SUCCESS) {
     return <Redirect to="/orderConfirmation" />;
-  } else if (status === "error") {
+  } else if (status === ORDER_ERROR) {
     return <p>Error</p>;
   }
   let sumPlusDelivery = sum + DELIVERY_PRICE;

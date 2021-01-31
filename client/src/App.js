@@ -7,7 +7,6 @@ import { OrderConfirmationPage } from "./OrderConfirmationPage";
 import { PageNotFoundPage } from "./PageNotFoundPage";
 import { PaymentPage } from "./PaymentPage";
 import { RegistrationPage } from "./RegistrationPage";
-import { Navigation } from "./Navigation";
 import { useSelector } from "react-redux";
 import { getIsAuthorized } from "./state";
 
@@ -16,7 +15,6 @@ function App() {
 
   return (
     <>
-      <Navigation />
       <Switch>
         <Route exact path="/">
           <ConfiguratorPage />

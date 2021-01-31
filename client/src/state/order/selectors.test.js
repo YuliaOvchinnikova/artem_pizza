@@ -1,24 +1,30 @@
 import { getOrderPizza, getOrderPayment, getOrderStatus } from "./selectors";
+import {
+  ORDER_SUCCESS,
+  ORDER_SENDING,
+  ORDER_ERROR,
+  ORDER_CREATING,
+} from "./order";
 
 describe("order selectors", () => {
   it("getOrderStatus returns status", () => {
     const initialState = {
-      order: { status: "creating", pizza: {}, payment: {} },
+      order: { status: ORDER_CREATING, pizza: {}, payment: {} },
     };
-    expect(getOrderStatus(initialState)).toEqual("creating");
+    expect(getOrderStatus(initialState)).toEqual(ORDER_CREATING);
 
-    initialState.order.status = "success";
-    expect(getOrderStatus(initialState)).toEqual("success");
-    initialState.order.status = "error";
-    expect(getOrderStatus(initialState)).toEqual("error");
-    initialState.order.status = "sending";
-    expect(getOrderStatus(initialState)).toEqual("sending");
+    initialState.order.status = ORDER_SUCCESS;
+    expect(getOrderStatus(initialState)).toEqual(ORDER_SUCCESS);
+    initialState.order.status = ORDER_ERROR;
+    expect(getOrderStatus(initialState)).toEqual(ORDER_ERROR);
+    initialState.order.status = ORDER_SENDING;
+    expect(getOrderStatus(initialState)).toEqual(ORDER_SENDING);
   });
 
   it("getOrderPizza returns pizza", () => {
     const initialState = {
       order: {
-        status: "creating",
+        status: ORDER_CREATING,
         pizza: { size: "small", dough: "thick", sauce: "hot" },
         payment: {},
       },
@@ -33,7 +39,7 @@ describe("order selectors", () => {
   it("getOrderPayment returns payment", () => {
     const initialState = {
       order: {
-        status: "creating",
+        status: ORDER_CREATING,
         pizza: { size: "small", dough: "thick", sauce: "hot" },
         payment: {
           cardNumber: "4444444444444444",

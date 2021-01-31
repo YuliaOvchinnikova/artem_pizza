@@ -1,24 +1,28 @@
 import React from "react";
+import styled from "styled-components";
+import { CheckboxItem } from "./CheckboxItem";
 
-export const CheckboxSet = ({ text, name, values, register }) => {
+const CheckboxContainer = styled.div`
+  background-color: "white";
+  padding: 2px;
+  display: flex;
+  overflow: auto;
+`;
+
+export const CheckboxSet = ({ name, values, register }) => {
   return (
     <>
-      <fieldset>
-        <legend>Choose {text}:</legend>
+      <CheckboxContainer>
         {values.map((value) => (
-          <div key={value.id}>
-            <label>
-              <input
-                name={name}
-                type="checkbox"
-                value={value.slug}
-                ref={register}
-              />
-              {value.name}
-            </label>
-          </div>
+          <CheckboxItem
+            key={value.id}
+            name={name}
+            value={value}
+            register={register}
+            image={value.slug}
+          />
         ))}
-      </fieldset>
+      </CheckboxContainer>
     </>
   );
 };
